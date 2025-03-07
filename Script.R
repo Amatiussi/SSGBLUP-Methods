@@ -10,9 +10,10 @@ install.packages("ggplot2")
 # - Matriz A: Matriz de parentesco baseada em pedigree.
 # - Matriz G: Matriz de parentesco genômico, derivada de marcadores moleculares.
 
-# calcular a matriz H para cada combinação de tau e omega 
+# Carregar os pacotes
+library(AGHmatrix); library(sommer) library(rBayesianOptimization); library(dplyr); library(ggplot2)
 
-############ Grid Search #################
+################################ Grid Search ################################
 
 # Definir a grade de parâmetros
 (tau_values <- seq(0.1, 2.0, by = 0.1))  # tau de 0.1 a 2.0, com incrementos de 0.1
@@ -29,15 +30,12 @@ for (tau in tau_values) {
   for (omega in omega_values) {
     # Calcular a matriz H com os parâmetros tau e omega
     H <- Hmatrix(A = matriz_A, G = matriz_G, tau = tau, omega = omega, method = "Martini")
+    
     # Armazenar a matriz H na lista
-    H_matrizes[[paste("tau", tau, "omega", omega, sep = "_")]] <- H
-   #}
- #}   
-    #length(H_matrices) # 420 combinações de tau e omega - ok 
+    H_matrizes[[paste("tau", tau, "omega", omega, sep = "_")]] <- H        # 420 combinações de tau e omega - ok 
     
     # Ajustar o modelo misto usando a matriz H
     model <- mmer(Y ~ 1, random = ~ vsr(Geno, Gu = H), rcov = ~ units, data = pheno_df)
-    #summary(model)
     
     # Obter os valores preditos
     predicted_values <- predict(model, D = "Geno")$pval
@@ -58,14 +56,10 @@ for (tau in tau_values) {
       omega = omega,
       predictive_ability = predictive_ability,
       inflation = inflation,
-      mse = mse,  
-      row.names = NULL  # Isso remove os nomes das linhas
+      mse = mse
     ))
   }
 }
-
-head(results); tail(results)
-
 
 # Adicionar uma coluna "is_best" para indicar as melhores combinações
 # Definir um limite para considerar uma combinação como "melhor"
@@ -74,23 +68,23 @@ threshold_inflation <- 1.1  # Inflação máxima de 1.1
 
 # Criar a coluna "is_best"
 results$is_best <- results$predictive_ability >= threshold_predictive_ability & results$inflation <= threshold_inflation
-print(results)
+head(results); tail(results) 
 
 # Filtrar apenas as combinações onde is_best é TRUE
 (best_combinations <- subset(results, is_best == TRUE))
 
 # Selecionar a combinação com a maior capacidade preditiva
-best_combination <- best_combinations[which.max(best_combinations$predictive_ability), ]
-print(best_combination)
+(best_combination <- best_combinations[which.max(best_combinations$predictive_ability), ])
+
+### Fim da análise 
+## Agora que temos a melhor combinação de parâmetros, podemos calcular a matriz H
 
 # Calcular a matriz H com a inclusão de pesos (parametros)
 (matriz_H=Hmatrix(matriz_A2, matriz_G, tau=1.9, omega=0.1, method="Martini"))
 
 #-----------------------------------------------------------------------------------------#
 
-############ Otimização bayesiana #################
-
-library(rBayesianOptimization)
+################################  Otimização bayesiana ################################ 
 
 # Criar uma lista para armazenar os resultados
 results_bayes <- data.frame()
@@ -130,11 +124,9 @@ objective_function <- function(tau, omega) {
   return(list(Score = predictive_ability, Pred = inflation))
 }
 
-
 # Definir os limites para tau e omega
 bounds <- list(tau = c(0.1, 2.0),         # tau entre 0.1 e 2.0
                omega = c(-1.0, 1.0))      # omega entre -1.0 e 1.0
-
 
 # Executar a otimização bayesiana
 set.seed(123)                # Definir semente para reproducibilidade
@@ -158,31 +150,37 @@ bayes_opt
 (results_bayes_rounded <- results_bayes %>%
   mutate(
     tau = round(tau, 1),
-    omega = round(omega, 1)))
+    omega = round(omega, 1))
+)
 
 # Extrair os melhores parâmetros
 (best_tau <- round(bayes_opt$Best_Par["tau"], 1))        
 (best_omega <- round(bayes_opt$Best_Par["omega"], 1))  
 
-
 # Extrair a capacidade preditiva e a inflação
 (best_predictive_ability <- bayes_opt$Best_Value)
 (best_inflation <- bayes_opt$Pred)
 
+### Fim da análise 
 
 # Calcular a matriz H com os melhores parâmetros
 (matriz_H <- Hmatrix(matriz_A2, matriz_G, tau = best_tau, omega = best_omega, method = "Martini"))
 
+#-----------------------------------------------------------------------------------------#
 
-################# Comparação de resultados das duas abordagens ##############################
+############# Comparação de resultados das duas abordagens #############
 
 # Melhores resultados do Grid Search
-(best_grid_search <- results[which.max(results$predictive_ability), ])  # tau = 1.9; omega = 0.1
+(best_grid_search <- results[which.max(results$predictive_ability), ])   # tau = 1.9; omega = 0.1
 
 # Melhores resultados da Otimização Bayesiana
-(best_bayes_opt <- history_bayes[which.max(history_bayes$Value), ]) # tau = 1.8; omega = 0.1
+(best_bayes_opt <- history_bayes[which.max(history_bayes$Value), ])      # tau = 1.8; omega = 0.1
 
-########## Grid Search
+#-----------------------------------------------------------------------------------------#
+
+############## Visualização gráfica dos resultados ##############
+
+#### Grid Search ####
 
 # Gráfico de calor para a capacidade preditiva
 ggplot(results, aes(x = tau, y = omega, fill = predictive_ability)) +
@@ -191,7 +189,7 @@ ggplot(results, aes(x = tau, y = omega, fill = predictive_ability)) +
   labs(title = "Capacidade Preditiva em Função de Tau e Omega",
        x = "Tau", y = "Omega", fill = "Capacidade Preditiva")
 
-# Gráfico de dispersão para Grid Search
+# Gráfico de dispersão 
 ggplot(results, aes(x = tau, y = omega, color = predictive_ability)) +
   geom_point(size = 3, alpha = 0.8) +
   scale_color_gradient(low = "blue", high = "red") +
@@ -214,7 +212,7 @@ ggplot(best_combinations, aes(x = tau, y = omega, fill = predictive_ability)) +
        x = "Tau", y = "Omega", fill = "Capacidade Preditiva")
 
 
-########## Otimização Bayesiana
+#### Otimização Bayesiana ####
 
 # Gráfico de calor para a capacidade preditiva
 ggplot(results_bayes_rounded, aes(x = tau, y = omega, fill = predictive_ability)) +
@@ -223,7 +221,7 @@ ggplot(results_bayes_rounded, aes(x = tau, y = omega, fill = predictive_ability)
   labs(title = "Otimização Bayesiana: Capacidade Preditiva em Função de Tau e Omega",
        x = "Tau", y = "Omega", fill = "Capacidade Preditiva") 
 
-# Gráfico de dispersão para Otimização Bayesiana
+# Gráfico de dispersão 
 ggplot(history_bayes, aes(x = tau, y = omega, color = Value)) +
   geom_point(size = 3, alpha = 0.8) +
   scale_color_gradient(low = "blue", high = "red") +
