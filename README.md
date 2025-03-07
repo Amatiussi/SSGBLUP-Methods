@@ -1,6 +1,6 @@
 # Definição dos Pesos na Matriz H na análise GBLUP de etapa única (Single-Step Genomic BLUP): Uma Abordagem com Grid Search e Otimização Bayesiana
 
-Na análise GBLUP de etapa única , um dos desafios comuns é a definição dos parâmetros τ (tau) e ω (omega). Esses parâmetros controlam a contribuição das matrizes genômicas G e de pedigree A na construção da matriz H, influenciando diretamente a precisão das predições. No entanto, a escolha adequada desses pesos é complexa devido à sensibilidade dos parâmetros, ao custo computacional e ao risco de super ou subestimação das predições.
+Na análise GBLUP de etapa única, um dos desafios comuns é a definição dos parâmetros τ (tau) e ω (omega). Esses parâmetros controlam a contribuição das matrizes genômicas G e de pedigree A na construção da matriz H, influenciando diretamente a precisão das predições. No entanto, a escolha adequada desses pesos é complexa devido à sensibilidade dos parâmetros, ao custo computacional e ao risco de super ou subestimação das predições.
 
 Para lidar com esse problema, explorei duas abordagens distintas para determinar os valores mais adequados para τ e ω: **Grid Search** e **Otimização Bayesiana**. O objetivo é melhorar a precisão das predições no HBLUP, garantindo um ajuste eficiente da matriz H.
 
