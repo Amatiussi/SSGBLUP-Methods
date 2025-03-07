@@ -30,6 +30,10 @@ Para comparar as duas abordagens, utilizei os seguintes critérios:
 ## Comparação e Resultados
 Nos experimentos realizados, o **Grid Search** forneceu uma visão completa do impacto dos parâmetros τ e ω, permitindo entender melhor seu comportamento. No entanto, a **Otimização Bayesiana** demonstrou ser uma alternativa mais eficiente, encontrando bons valores para os parâmetros com menos avaliações.
 
+<p align="center">
+  <img src='./heritability/Figure2.png' width='70%' height='70%' alt="">
+</p>
+
 Os gráficos gerados mostram que:
 
 - No **Grid Search**, os pontos são distribuídos uniformemente, cobrindo toda a grade de parâmetros.
@@ -41,4 +45,4 @@ Essa comparação demonstra que ambas as abordagens têm suas vantagens e podem 
 MARTINI, Johannes WR et al. The effect of the H−1 scaling factors τ and ω on the structure of H in the single-step procedure. Genetics Selection Evolution, v. 50, n. 1, p. 16, 2018. https://doi.org/10.1186/s12711-018-0386-x. 
 
 # Pacotes Utilizados
-Para implementar as análises de Grid Search e Otimização Bayesiana, foram utilizados pacotes específicos do R que facilitam o cálculo da matriz H, a ajustagem de modelos mistos e a otimização de parâmetros. O pacote '**AGHmatrix**' foi empregado para calcular as matrizes de parentesco genômico (G) e de pedigree (A), bem como para construir a matriz híbrida H com os parâmetros τ e ω. Para ajustar os modelos mistos, utilizou-se o pacote **sommer**, que permite a inclusão de estruturas complexas de variância e covariância. Já a otimização bayesiana foi realizada com o pacote **rBayesianOptimization**, que implementa uma abordagem eficiente para explorar o espaço de parâmetros. Além disso, o pacote **dplyr** foi utilizado para manipulação de dados e o **ggplot2** para a visualização dos resultados.
+Para implementar as análises de Grid Search e Otimização Bayesiana, foram utilizados pacotes específicos do R que facilitam o cálculo da matriz H, a ajustagem de modelos mistos e a otimização de parâmetros. O pacote `**AGHmatrix**` foi empregado para calcular as matrizes de parentesco genômico (G) e de pedigree (A), bem como para construir a matriz híbrida H com os parâmetros τ e ω. Para ajustar os modelos mistos, utilizou-se o pacote `**sommer**`, que permite a inclusão de estruturas complexas de variância e covariância. Já a otimização bayesiana foi realizada com o pacote `**rBayesianOptimization**`, que implementa uma abordagem eficiente para explorar o espaço de parâmetros. Além disso, o pacote `**dplyr**` foi utilizado para manipulação de dados e o `**ggplot2**` para a visualização dos resultados.
