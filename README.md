@@ -1,9 +1,41 @@
-# Matriz H na Análise GBLUP de etapa única (Single-Step Genomic BLUP)
-A definição dos pesos τ e ω na matriz H é um passo crítico no modelo HBLUP, mas também um dos mais desafiadores. Métodos como o Grid Search e a Otimização Bayesiana oferecem soluções eficientes e sistemáticas para explorar o espaço de busca desses parâmetros, superando as limitações das abordagens manuais. 
+# Definição dos Pesos na Matriz H na análise GBLUP de etapa única (Single-Step Genomic BLUP): Uma Abordagem com Grid Search e Otimização Bayesiana
 
+Na análise GBLUP de etapa única , um dos desafios comuns é a definição dos parâmetros \(\tau\) (tau) e \(\omega\) (omega). Esses parâmetros controlam a contribuição das matrizes genômicas (\(G\)) e de pedigree (\(A\)) na construção da matriz \(H\), influenciando diretamente a precisão das predições. No entanto, defini-los manualmente pode ser difícil devido à sensibilidade dos parâmetros, ao custo computacional e ao risco de super/subestimação.
 
+Para lidar com esse problema, explorei duas abordagens distintas para determinar os valores mais adequados para \(\tau\) e \(\omega\): **Grid Search** e **Otimização Bayesiana**. O objetivo é melhorar a precisão das predições no HBLUP, garantindo um ajuste eficiente da matriz \(H\).
 
+## Abordagens Utilizadas
 
+### 1. Grid Search
+O **Grid Search** consiste em testar todas as combinações possíveis de \(\tau\) e \(\omega\) dentro de uma grade predefinida de valores. As principais características desse método são:
 
-Para quem quiser explorar mais afundo os efeito dos parâmetros τ  e ω na construção da matriz H, recomento esse estudo: 
+- **Busca exaustiva**: Garante que todas as combinações de parâmetros dentro da grade sejam avaliadas.
+- **Facilidade de implementação**: Simples de configurar e interpretar.
+- **Alto custo computacional**: Pode ser inviável se a grade for muito grande, pois exige a avaliação de um grande número de modelos.
+
+### 2. Otimização Bayesiana
+A **Otimização Bayesiana** A Otimização Bayesiana adota uma abordagem iterativa para encontrar os melhores valores de \(\tau\) e \(\omega\). Inicialmente, alguns pontos são avaliados aleatoriamente, e com base nos resultados obtidos, um modelo probabilístico é ajustado para prever quais regiões do espaço de busca são mais promissoras. Esse processo se repete, sempre priorizando áreas com maior potencial de melhoria. Suas características incluem:
+
+- **Busca inteligente**: Prioriza regiões mais promissoras do espaço de parâmetros, evitando avaliações desnecessárias.
+- **Eficiência computacional**: Reduz o número de combinações testadas, economizando tempo e recursos.
+- **Complexidade maior**: Requer um modelo de surrogate (como processos gaussianos) para guiar a busca.
+
+## Critérios de Avaliação
+Para comparar as duas abordagens, utilizei os seguintes critérios:
+
+- **Capacidade Preditiva**: Correlação entre fenótipos observados e valores preditos.
+- **Inflação**: Inclinação da regressão dos fenótipos observados em relação aos valores preditos.
+- **Erro Quadrático Médio (MSE)**: Mede a qualidade da predição; quanto menor o MSE, melhor o modelo.
+
+## Comparação e Resultados
+Nos experimentos realizados, o **Grid Search** forneceu uma visão completa do impacto dos parâmetros \(\tau\) e \(\omega\), permitindo entender melhor seu comportamento. No entanto, a **Otimização Bayesiana** demonstrou ser uma alternativa mais eficiente, encontrando bons valores para os parâmetros com menos avaliações.
+
+Os gráficos gerados mostram que:
+
+- No **Grid Search**, os pontos são distribuídos uniformemente, cobrindo toda a grade de parâmetros.
+- Na **Otimização Bayesiana**, os pontos testados são mais dispersos no início, mas rapidamente se concentram nas regiões mais promissoras.
+
+Essa comparação demonstra que ambas as abordagens têm suas vantagens e podem ser usadas em conjunto para melhorar a definição dos pesos na matriz \(H\). 
+
+# Para quem quiser explorar mais afundo os efeito dos parâmetros τ  e ω na construção da matriz H, recomento esse estudo: 
 MARTINI, Johannes WR et al. The effect of the H− 1 scaling factors τ and ω on the structure of H in the single-step procedure. Genetics Selection Evolution, v. 50, n. 1, p. 16, 2018. https://doi.org/10.1186/s12711-018-0386-x. 
