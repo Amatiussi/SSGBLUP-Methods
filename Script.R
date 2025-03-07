@@ -5,6 +5,11 @@ install.packages("rBayesianOptimization")
 install.packages("dplyr")
 install.packages("ggplot2")
 
+# Observação:
+# Este script realiza o cálculo da matriz H no contexto do SSGBLUP. Para executar a análise, é necessário ter previamente calculadas as matrizes de parentesco:
+# - Matriz A: Matriz de parentesco baseada em pedigree.
+# - Matriz G: Matriz de parentesco genômico, derivada de marcadores moleculares.
+
 # calcular a matriz H para cada combinação de tau e omega 
 
 ############ Grid Search #################
