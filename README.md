@@ -1,4 +1,4 @@
-# Matriz H na Análise SSGBLUP
+# Matriz H na Análise GBLUP de etapa única (Single-Step Genomic BLUP)
 A definição dos pesos τ e ω na matriz H é um passo crítico no modelo HBLUP, mas também um dos mais desafiadores. Métodos como o Grid Search e a Otimização Bayesiana oferecem soluções eficientes e sistemáticas para explorar o espaço de busca desses parâmetros, superando as limitações das abordagens manuais. 
 
 
