@@ -31,7 +31,7 @@ Para comparar as duas abordagens, utilizei os seguintes critérios:
 Nos experimentos realizados, o **Grid Search** forneceu uma visão completa do impacto dos parâmetros τ e ω, permitindo entender melhor seu comportamento. No entanto, a **Otimização Bayesiana** demonstrou ser uma alternativa mais eficiente, encontrando bons valores para os parâmetros com menos avaliações.
 
 <p align="center">
-  <img src='./heritability/Figure2.png' width='70%' height='70%' alt="">
+  <img src='Plot.png' width='70%' height='70%' alt="">
 </p>
 
 Os gráficos gerados mostram que:
