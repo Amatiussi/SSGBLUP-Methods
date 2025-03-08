@@ -44,9 +44,9 @@ Essa comparação demonstra que ambas as abordagens têm suas vantagens e podem 
 # Pacotes R Utilizados
 Para implementar as análises de **Grid Search** e **Otimização Bayesiana**, foram utilizados pacotes específicos do R que facilitam o cálculo da matriz H, a ajustagem de modelos mistos e a otimização de parâmetros. 
 
-- O pacote `AGHmatrix` foi empregado para calcular as matrizes de parentesco genômico (G) e de pedigree (A), bem como para construir a matriz híbrida H com os parâmetros τ e ω.
-- Para ajustar os modelos mistos, utilizou-se o pacote `sommer`, que permite a inclusão de estruturas complexas de variância e covariância.
-- Já a otimização bayesiana foi realizada com o pacote `rBayesianOptimization`, que implementa uma abordagem eficiente para explorar o espaço de parâmetros.
+- O pacote `AGHmatrix` foi empregado para calcular as matrizes de parentesco genômico (G) e de pedigree (A), bem como para construir a matriz híbrida H com os parâmetros τ e ω. https://doi.org/10.32614/CRAN.package.AGHmatrix 
+- Para ajustar os modelos mistos, utilizou-se o pacote `sommer`, que permite a inclusão de estruturas complexas de variância e covariância. https://doi.org/10.32614/CRAN.package.sommer 
+- Já a otimização bayesiana foi realizada com o pacote `rBayesianOptimization`, que implementa uma abordagem eficiente para explorar o espaço de parâmetros. https://doi.org/10.32614/CRAN.package.rBayesianOptimization 
 - Além disso, o pacote `dplyr` foi utilizado para manipulação de dados e o `ggplot2` para a visualização dos resultados.
 
 # Para quem quiser explorar mais afundo os efeito dos parâmetros τ e ω na construção da matriz H, recomento esse estudo: 
