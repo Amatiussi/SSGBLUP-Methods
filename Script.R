@@ -80,7 +80,7 @@ head(results); tail(results)
 ## Agora que temos a melhor combinação de parâmetros, podemos calcular a matriz H
 
 # Calcular a matriz H com a inclusão de pesos (parametros)
-(matriz_H=Hmatrix(matriz_A2, matriz_G, tau=1.9, omega=0.1, method="Martini"))
+(matriz_H=Hmatrix(matriz_A, matriz_G, tau=1.9, omega=0.1, method="Martini"))
 
 #-----------------------------------------------------------------------------------------#
 
@@ -164,7 +164,7 @@ bayes_opt
 ### Fim da análise 
 
 # Calcular a matriz H com os melhores parâmetros
-(matriz_H <- Hmatrix(matriz_A2, matriz_G, tau = best_tau, omega = best_omega, method = "Martini"))
+(matriz_H <- Hmatrix(matriz_A, matriz_G, tau = best_tau, omega = best_omega, method = "Martini"))
 
 #-----------------------------------------------------------------------------------------#
 
