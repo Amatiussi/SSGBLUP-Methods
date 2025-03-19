@@ -17,7 +17,7 @@ O `Grid Search` consiste em testar todas as combinações possíveis de τ e ω 
 ### 2. Otimização Bayesiana (𝗽𝗿𝗼𝗰𝗲𝘀𝘀𝗼 𝗶𝘁𝗲𝗿𝗮𝘁𝗶𝘃𝗼) 🔄
 A `Otimização Bayesiana` adota uma abordagem iterativa e inteligente para encontrar os melhores valores de τ e ω. Inicialmente, alguns pontos são avaliados aleatoriamente, e com base nos resultados obtidos, um modelo probabilístico é ajustado para prever quais regiões do espaço de busca são mais promissoras. Esse processo se repete, sempre priorizando áreas com maior potencial de melhoria. Suas características incluem:
 
-- **Busca inteligente**: Prioriza regiões mais promissoras do espaço de parâmetros, evitando avaliações desnecessárias.
+- **Busca inteligente**: Usa um modelo probabilístico para explorar o espaço de parâmetros de forma inteligente, focando nas regiões mais promissoras.
 - **Eficiência computacional**: Reduz o número de combinações testadas, economizando tempo e recursos.
 - **Complexidade maior**: Requer um modelo de surrogate (como processos gaussianos) para guiar a busca.
 
